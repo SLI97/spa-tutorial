@@ -1,7 +1,7 @@
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const path = require('path')
 const webpack = require('webpack')
-const htmlPlugin = require('html-webpack-plugin')
+const htmlWebpackPlugin = require('html-webpack-plugin')
 //增加页面热加载字段，添加到entry中（固定写法）
 const hotMiddlewareScript = 'webpack-hot-middleware/client?reload=true'
 
@@ -44,10 +44,11 @@ module.exports = {
     //新增html插件，生成main.js的同时生成index.htmlF
     plugins: [
         new VueLoaderPlugin(),
-        new htmlPlugin({
-            template: 'index.html'
+        new htmlWebpackPlugin({
+            template: './public/index.html',
+	        options: self.options
         }),
         //热加载需要使用这个插件才起作用
         new webpack.HotModuleReplacementPlugin(),
     ]
-}   
+}

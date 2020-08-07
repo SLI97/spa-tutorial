@@ -1,6 +1,6 @@
 const webpack = require('webpack')
-// const webpackConfig = require('./build/webpack.config')
-const webpackConfig = require('./build/webpack.pro.config')
+const webpackConfig = require('./build/webpack.config')
+// const webpackConfig = require('./build/webpack.pro.config')
 const webpackDevConfig = require('./build/webpack.dev.config')
 //dev和hot用来实现前端的热加载
 const webpackDevMiddleware = require('webpack-dev-middleware')
