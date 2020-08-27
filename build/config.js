@@ -5,7 +5,7 @@ let isdev = process.env.NODE_ENV == 'development' ? true : false
 
 let config = {
     isdev: isdev,
-    publicPath: 'http://localhost:3000/',
+    publicPath: '/',
     port: '3000'
 }
 

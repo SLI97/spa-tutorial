@@ -5,10 +5,8 @@
 export default {
   data() {
     return {
-      msg: "this is my app!",
+      msg: "this is my app!!zxc123!!",
     };
   },
 };
 </script>
-<style lang='less'>
-</style>
