@@ -16,8 +16,12 @@
 
 <script>
 	export default {
+		data() {
+			return {
+				haha: 123
+			}
+		},
 		created() {
-			// console.log(this.$router)
 		},
 		methods: {
 			toHome() {
