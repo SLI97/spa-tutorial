@@ -8,10 +8,11 @@ const webpackHotMiddleware = require('webpack-hot-middleware')
 const express = require('express')
 const path = require('path')
 const config = require('./build/config')
+const ConnectHistoryApiFallback = require("connect-history-api-fallback")
 // const swig = require('swig')
 
 const app = express()
-
+app.use(ConnectHistoryApiFallback({index:"/index.html"}))
 // app.use(express.static(path.resolve(__dirname,"./dist")))
 
 // const compiler = webpack(webpackConfig)//删除了打印的回调函数，加上的话这里会执行两遍打包，不晓得为啥
@@ -30,36 +31,38 @@ const app = express()
 
 
 if (config.isdev) {
-    console.log('server运行在开发环境')
-    const compiler = webpack(webpackDevConfig)
+	console.log('server运行在开发环境')
+	const compiler = webpack(webpackDevConfig)
 
-    app.use(webpackDevMiddleware(compiler, {
-        // public path should be the same with webpack config
-        publicPath: webpackDevConfig.output.publicPath,
-        stats: {
-            colors: true
-        }
-    }))
+	app.use(webpackDevMiddleware(compiler, {
+		// public path should be the same with webpack config
+		publicPath: webpackDevConfig.output.publicPath,
+		stats: {
+			colors: true
+		}
+	}))
 
 
-    app.use(webpackHotMiddleware(compiler))
+	app.use(webpackHotMiddleware(compiler, {
+		log: false,
+	}))
 
 } else {
-    console.log('server运行在生产环境')
+	console.log('server运行在生产环境')
 
-    webpack(webpackConfig, function (err, stats) {
-        if (err) throw err
-        //输出打包信息（这里又可以用了）
-        process.stdout.write(stats.toString({
-            colors: true,
-            modules: false,
-            children: false,
-            chunks: false,
-            chunkModules: false
-        }) + '\n\n')
-        app.use(express.static(path.resolve(__dirname, './dist')))
+	webpack(webpackConfig, function (err, stats) {
+		if (err) throw err
+		//输出打包信息（这里又可以用了）
+		process.stdout.write(stats.toString({
+			colors: true,
+			modules: false,
+			children: false,
+			chunks: false,
+			chunkModules: false
+		}) + '\n\n')
+		app.use(express.static(path.resolve(__dirname, './dist')))
 
-    })
+	})
 }
 
 
@@ -67,5 +70,5 @@ if (config.isdev) {
 
 const port = 3030
 app.listen(3030, function () {
-    console.log('App  is now running on port ' + port);
+	console.log('App  is now running on port ' + port);
 })
